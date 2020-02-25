@@ -4,7 +4,7 @@ from ring_buffer import RingBuffer, ArrayRingBuffer
 
 class RingBufferTests(unittest.TestCase):
     def setUp(self):
-        self.buffer = RingBuffer(5)
+        self.buffer = RingBuffer(5) 
         self.buffer_2 = RingBuffer(5)
 
     def test_ring_buffer(self):

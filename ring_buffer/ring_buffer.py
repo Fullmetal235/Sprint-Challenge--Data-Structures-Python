@@ -2,25 +2,49 @@ from doubly_linked_list import DoublyLinkedList
 
 
 class RingBuffer:
-    def __init__(self, capacity):
-        self.capacity = capacity
-        self.current = None
-        self.storage = DoublyLinkedList()
+  def __init__(self, capacity):
+    self.capacity = capacity
+    # current is oldest item.
+    self.current = None
+    self.storage = DoublyLinkedList()
+    self.size = 0
 
-    def append(self, item):
-        self.storage[self.current] = item
-        if self.current == self.capacity-1:
-            self.current = 0
-        else:
-            self.current += 1
+  def append(self, item):
 
-    def get(self):
-        storage = []
+    if self.size < self.capacity:
+      self.storage.add_to_tail(item)
+      self.current = self.storage.head
+      self.size += 1
+    else:
+      # change the value of the oldest element to the new value coming in
+      self.current.value = item
 
-        for item in self.storage:
-            if item:
-                storage.append(item)
-        return storage
+      # if the current oldest item is the tail, change it to the head
+      if self.current == self.storage.tail:
+        self.current = self.storage.head
+        # otherwise make it the next node in the dll.
+      else:
+        self.current = self.current.next        
+    
+
+  def get(self):
+    # Note:  This is the only [] allowed
+    list_buffer_contents = []
+
+    # TODO: Your code here
+    # initial impression: iterate through dll and append to array?
+
+    current = self.storage.head
+    
+    if not current:
+      return None
+
+    while current:
+      list_buffer_contents.append(current.value)
+      current = current.next
+
+    return list_buffer_contents
+
 
 # ----------------Stretch Goal-------------------
 
